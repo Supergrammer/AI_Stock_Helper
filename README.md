@@ -8,12 +8,11 @@
 
 주식 조회 서버, 주식 매매 서버가 따로 구성
 
-#### Docker 환경
-
-- Window server
+#### Window 환경
 
 #### Anaconda 가상 환경
 
+- python 3.9
 - fastapi, uvicorn
 
 #### IDE 환경

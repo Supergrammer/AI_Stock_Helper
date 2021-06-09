@@ -18,7 +18,3 @@ assignees: Supergrammer
 #### 관련 이슈 (Related Issues) :
 
 > 여기에 관련 이슈에 대해 기술하거나 링크를 첨부하세요.
-
-#### 라벨 (Label) :
-
-> 여기에 관련 라벨을 추가하세요.

@@ -14,6 +14,7 @@
 
 - python 3.9
 - fastapi, uvicorn
+- pip - manage-fastapi, kiwoom
 
 #### IDE 환경
 

@@ -82,3 +82,6 @@ $RECYCLE.BIN/
 
 # Windows shortcuts
 *.lnk
+
+## Configuration File
+config.json

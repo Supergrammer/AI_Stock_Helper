@@ -15,16 +15,24 @@
 
 #### Docker 환경
 
-- PostgreSQL DB
+- PostgreSQL DB, Local 저장소
 
 #### Anaconda 가상 환경
 
 - python 3.9
-- fastapi, uvicorn
+- fastapi, uvicorn, sqlalchemy, psycopg2
 
 #### IDE 환경
 
-- Visual studio code - python, pylance
+- Visual studio code - python, pylance, autopep8
+
+
+
+### 실행 코드
+
+- 최상위 프로젝트 폴더에서 다음 코드 실행
+
+  `uvicorn app.main:app --host=localhost --port=7000 --workers=4 --reload`
 
 
 
@@ -44,6 +52,21 @@ $ docker exec -it Postgres /bin/bash
 
 # 볼륨 확인
 $ docker volume inspect pgdata
+```
+```bash
+psql -U postgres
+
+# postgresql 유저 확인
+SELECT * FROM PG_USER;
+
+------------------- 설정 추가 -------------------------------
+
+$ su - postgres
+$ psql --username=postgres --dbname=postgres
+
+CREATE ROLE [username] LOGIN SUPERUSER CREATEDB REPLICATION PASSWORD "password"
+
+
 ```
 
 
@@ -71,4 +94,16 @@ $ docker volume inspect pgdata
 - PostgreSQL Container 설치
 
   [Docker Postgresql 설치 및 셋팅하기](https://judo0179.tistory.com/96?category=281955)
+  
+- 파이썬, 에러 처리 및 참고 자료
+
+  [PEP 8 -- Style Guide for Python Code](https://www.python.org/dev/peps/pep-0008/)
+
+  [[Python] 패키지 생성과 import](https://velog.io/@sji7532/Python-%ED%8C%A8%ED%82%A4%EC%A7%80-%EC%83%9D%EC%84%B1%EA%B3%BC-import)
+
+  [Lazy Loading & Caching in ORM](https://velog.io/@minho/Lazy-Loading-Caching-in-ORM)
+
+  [FastAPI import error](https://stackoverflow.com/questions/60819376/fastapi-throws-an-error-error-loading-asgi-app-could-not-import-module-api)
+
+  [Python import error](https://naon.me/posts/til26)
 

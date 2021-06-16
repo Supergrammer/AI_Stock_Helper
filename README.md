@@ -20,11 +20,13 @@
 #### Anaconda 가상 환경
 
 - python 3.9
-- fastapi, uvicorn, sqlalchemy, psycopg2
+- fastapi, uvicorn, sqlalchemy, python-dotenv, (psycopg2), python-jose, passlib(jwt), python-multipart
 
 #### IDE 환경
 
 - Visual studio code - python, pylance, autopep8
+
+- DB Client tool - TablePlus
 
 
 
@@ -32,7 +34,7 @@
 
 - 최상위 프로젝트 폴더에서 다음 코드 실행
 
-  `uvicorn app.main:app --host=localhost --port=7000 --workers=4 --reload`
+  `uvicorn user_app.main:app --host=localhost --port=7000 --workers=4 --reload`
 
 
 
@@ -62,11 +64,16 @@ SELECT * FROM PG_USER;
 ------------------- 설정 추가 -------------------------------
 
 $ su - postgres
-$ psql --username=postgres --dbname=postgres
+$ psql
 
-CREATE ROLE [username] LOGIN SUPERUSER CREATEDB REPLICATION PASSWORD "password"
+CREATE USER user_app WITH ENCRYPTED PASSWORD 'rlaguscjf';
+CREATE DATABASE user_db OWNER user_app ENCODING 'utf-8';
 
+DROP DATABASE user_db;
 
+$ psql -U user_app -d user_db -W
+
+\dt
 ```
 
 
@@ -106,4 +113,12 @@ CREATE ROLE [username] LOGIN SUPERUSER CREATEDB REPLICATION PASSWORD "password"
   [FastAPI import error](https://stackoverflow.com/questions/60819376/fastapi-throws-an-error-error-loading-asgi-app-could-not-import-module-api)
 
   [Python import error](https://naon.me/posts/til26)
+  
+  [Python Mixin](https://hamait.tistory.com/859)
+  
+- FastAPI 이슈 관련 자료
+
+  [FastAPI decodeerror](https://github.com/tiangolo/fastapi/issues/990)
+
+  [FastAPI response model ValidationError](https://github.com/samuelcolvin/pydantic/issues/511)
 

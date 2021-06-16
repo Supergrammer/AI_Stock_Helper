@@ -20,7 +20,7 @@
 #### Anaconda 가상 환경
 
 - python 3.9
-- fastapi, uvicorn, sqlalchemy, python-dotenv, (psycopg2)
+- fastapi, uvicorn, sqlalchemy, python-dotenv, (psycopg2), python-jose, passlib(jwt), python-multipart
 
 #### IDE 환경
 
@@ -69,6 +69,8 @@ $ psql
 CREATE USER user_app WITH ENCRYPTED PASSWORD 'rlaguscjf';
 CREATE DATABASE user_db OWNER user_app ENCODING 'utf-8';
 
+DROP DATABASE user_db;
+
 $ psql -U user_app -d user_db -W
 
 \dt
@@ -113,4 +115,10 @@ $ psql -U user_app -d user_db -W
   [Python import error](https://naon.me/posts/til26)
   
   [Python Mixin](https://hamait.tistory.com/859)
+  
+- FastAPI 이슈 관련 자료
+
+  [FastAPI decodeerror](https://github.com/tiangolo/fastapi/issues/990)
+
+  [FastAPI response model ValidationError](https://github.com/samuelcolvin/pydantic/issues/511)
 

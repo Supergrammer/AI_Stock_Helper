@@ -7,9 +7,10 @@ from passlib.context import CryptContext
 from jose import JWTError, jwt
 
 from pydantic import ValidationError
+from sqlalchemy.orm import Session
 
 from ..models.user_model import User
-from ..schemas import user_auth_schema
+from ..schemas import token_schema
 
 from ..config.config import get_configurations
 from ..config.database import get_db
@@ -18,8 +19,6 @@ c = get_configurations()
 SECRET_KEY = c.secret_key
 HASH_ALGORITHM = c.hash_algorithm
 ACCESS_TOKEN_EXPIRE_MINUTES = c.access_token_expire_minutes
-
-db = get_db()
 
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 oauth2_scheme = OAuth2PasswordBearer(
@@ -35,22 +34,21 @@ def get_hashed_password(plain):
 
 def create_access_token(data: dict, expire_minutes: int = ACCESS_TOKEN_EXPIRE_MINUTES):
     to_encode = data.copy()
-    expire = datetime.utcnow() + timedelta(minutes=expire_minutes)
-    
-    to_encode.update({"exp": expire})
-    encoded_jwt = jwt.encode(to_encode, SECRET_KEY, algorithm=HASH_ALGORITHM)
+    to_encode.update(
+        {"exp": datetime.utcnow() + timedelta(minutes=expire_minutes)})
 
+    encoded_jwt = jwt.encode(to_encode, SECRET_KEY, algorithm=HASH_ALGORITHM)
     return encoded_jwt
 
-def is_user_authenticated(form_data: OAuth2PasswordRequestForm):
+def is_authenticated_user(form_data: OAuth2PasswordRequestForm, db: Session = get_db()):
     user = db.query(User).filter(User.email == form_data.username).first()
 
     if not user or \
-        not verify_password(form_data.password, user.password):
+        not verify_password(form_data.password, user.password.password_history[-1]):
         return False
     return user
 
-async def get_current_user(security_scopes: SecurityScopes, token: str = Depends(oauth2_scheme)):
+async def get_current_user(security_scopes: SecurityScopes, token: str = Depends(oauth2_scheme), db: Session = get_db()):
     authenticate_value = "Bearer" \
             + f' scope="{security_scopes.scope_str}"' if security_scopes.scopes else ''
 
@@ -68,7 +66,7 @@ async def get_current_user(security_scopes: SecurityScopes, token: str = Depends
             raise credentials_exception
 
         token_scopes = payload.get("scopes", [])
-        token_data = user_auth_schema.TokenData(email=email, scopes=token_scopes)
+        token_data = token_schema.TokenData(email=email, scopes=token_scopes)
     except (JWTError, ValidationError):
         raise credentials_exception
 

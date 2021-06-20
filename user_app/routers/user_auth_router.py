@@ -1,19 +1,19 @@
-from fastapi import APIRouter, HTTPException, status, Depends, Security
+from fastapi import APIRouter, HTTPException, status, Depends
 
 from fastapi.security.oauth2 import OAuth2PasswordRequestForm
 
+from ..modules import oauth_module
 from ..models.user_model import User
-from ..schemas import user_auth_schema
-from ..services import user_auth_service
+from ..schemas import token_schema
 
 router = APIRouter(
-    prefix="/user/auth",
+    prefix="/auth",
     tags=["auth"],
 )
 
-@router.post("/token", response_model=user_auth_schema.Token)
+@router.post("/token", response_model=token_schema.Token)
 async def login_for_access_token(form_data: OAuth2PasswordRequestForm = Depends()):
-    user = user_auth_service.is_user_authenticated(form_data=form_data)
+    user = oauth_module.is_authenticated_user(form_data=form_data)
 
     if not user:
         raise HTTPException(
@@ -21,10 +21,10 @@ async def login_for_access_token(form_data: OAuth2PasswordRequestForm = Depends(
             detail="Incorrect email or password",
         )
     
-    access_token = user_auth_service.create_access_token(
+    access_token = oauth_module.create_access_token( \
         data={"email": user.email, "scopes": form_data.scopes})
     return {"access_token": access_token, "token_type": "bearer"}
 
-@router.get("/my_info")
-async def read_user_info(current_user: User = Security(user_auth_service.get_current_active_user, scopes=["userinfo"])):
-    return current_user
+# @router.get("/my_info")
+# async def read_user_info(current_user: User = Depends(oauth_module.get_current_active_user)):
+#     return current_user

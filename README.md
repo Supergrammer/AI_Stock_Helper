@@ -121,4 +121,10 @@ $ psql -U user_app -d user_db -W
   [FastAPI decodeerror](https://github.com/tiangolo/fastapi/issues/990)
 
   [FastAPI response model ValidationError](https://github.com/samuelcolvin/pydantic/issues/511)
+  
+- SQLalchemy 관련 자료
+
+  [SQLAlchemy Relationship 사용하기](https://velog.io/@sangmin7648/%EC%98%A4%EB%8A%98%EC%9D%98-%EB%B0%B0%EC%9B%80-035)
+
+  [Database table, column 명명 규칙](https://sabarada.tistory.com/49)
 

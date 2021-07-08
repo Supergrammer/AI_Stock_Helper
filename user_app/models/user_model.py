@@ -1,9 +1,9 @@
 from sqlalchemy import Column, String, ARRAY
-from sqlalchemy.orm import backref, relationship
-
 from sqlalchemy.dialects.postgresql import UUID
 
 import uuid
+
+from sqlalchemy.orm import backref, relationship
 
 from .base_model import Base, BaseMixin
 

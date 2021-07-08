@@ -47,6 +47,8 @@ $ docker volume create pgdata # 볼륨 생성
 
 $ docker run -p 5432:5432 --name Postgres -e POSTGRES_PASSWORD=rlaguscjf -d -v pgdata:/var/lib/postgresql/data postgres # docker run 에 pgdata 마운트
 
+$ docker run -p 5432:5432 --name Postgres -e POSTGRES_PASSWORD=rlaguscjf -d -v /Users/supergrammer/Google\ 드라이브/ProjectData/AI_Stock_Helper:/var/lib/postgresql/data postgres # 또는 이렇게
+
 $ docker ps -a
 
 $ docker exec -it Postgres /bin/bash
@@ -121,4 +123,10 @@ $ psql -U user_app -d user_db -W
   [FastAPI decodeerror](https://github.com/tiangolo/fastapi/issues/990)
 
   [FastAPI response model ValidationError](https://github.com/samuelcolvin/pydantic/issues/511)
+  
+- SQLalchemy 관련 자료
+
+  [SQLAlchemy Relationship 사용하기](https://velog.io/@sangmin7648/%EC%98%A4%EB%8A%98%EC%9D%98-%EB%B0%B0%EC%9B%80-035)
+
+  [Database table, column 명명 규칙](https://sabarada.tistory.com/49)
 

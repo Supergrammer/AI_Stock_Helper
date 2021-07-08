@@ -1,5 +1,6 @@
 from datetime import datetime
-from typing import Optional
+from typing import List, Optional
+from uuid import UUID
 from pydantic import BaseModel
 
 class UserRequest(BaseModel):
@@ -12,31 +13,46 @@ class UserAuth(BaseModel):
     email: str
     password: str
 
+class UserPassword(BaseModel):
+    id: UUID
+    password_history: list[str]
+
+    class Config:
+        orm_mode = True
+
 class User(BaseModel):
-    id: int
+    id: UUID
     email: str
-    password: str
+    password: UserPassword
     username: str
     nickname: Optional[str] = None
-    created_date: Optional[datetime] = None
-    updated_date: Optional[datetime] = None
+    authority: Optional[list[str]] = []
+
+    created_date: datetime
+    updated_date: datetime
+
+    class Config:
+        orm_mode = True
 
 class UserCreate(UserRequest):
     email: str
     password: str
     username: str
     nickname: Optional[str] = None
+    authority: Optional[list[str]] = []
 
 class UserDelete(UserRequest, UserAuth):
     pass
 
-class UserGet(UserResponse):
-    id: int
+class UserRead(UserResponse):
+    id: UUID
     email: str
     username: str
     nickname: Optional[str] = None
-    created_date: Optional[datetime] = None
-    updated_date: Optional[datetime] = None
+    authority: Optional[list[str]] = []
+
+    created_date: datetime
+    updated_date: datetime
 
     class Config:
         orm_mode = True

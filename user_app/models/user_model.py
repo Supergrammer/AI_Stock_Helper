@@ -15,7 +15,8 @@ class User(Base, BaseMixin):
     password = relationship( \
         "Password",
         backref=backref("user", uselist=False),
-        primaryjoin='foreign(User.id) == remote(Password.id)')
+        primaryjoin="foreign(User.id) == remote(Password.id)",
+        cascade="all, delete")
     
     username = Column(String(21), nullable=False)
     nickname = Column(String(51), nullable=True)

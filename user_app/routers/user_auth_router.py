@@ -10,9 +10,9 @@ router = APIRouter(
     tags=["auth"],
 )
 
-class ProxyUser():
-    def __init__(self, user = Depends(oauth_module.get_current_active_user)):
-        self.user = user
+# class ProxyUser():
+#     def __init__(self, user = Depends(oauth_module.get_current_active_user)):
+#         self.user = user
 
 @router.post("/token", response_model=token_schema.Token)
 async def login_for_access_token(form_data: OAuth2PasswordRequestForm = Depends()):

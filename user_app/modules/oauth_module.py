@@ -67,7 +67,7 @@ async def get_current_user(token: str = Depends(oauth2_scheme), db: Session = ge
 
     return user
 
-async def get_current_active_user(current_user: user_schema.User = Depends(get_current_user)):
-    if not current_user:
-        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="Inactive user")
-    return current_user
+# async def get_current_active_user(current_user: user_schema.User = Depends(get_current_user)):
+#     if not current_user:
+#         raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="Inactive user")
+#     return current_user
